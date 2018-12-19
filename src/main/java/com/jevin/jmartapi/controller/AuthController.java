@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    AuthRepo authRepo;
+    AuthRepo repo;
 
     @PostMapping
     public User loginUser(@RequestBody User user) {
-        return authRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+        return repo.findByEmailAndPassword(user.getEmail(), user.getPassword());
     }
 }
