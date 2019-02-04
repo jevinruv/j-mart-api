@@ -1,7 +1,6 @@
 package com.jevin.jmartapi.controller;
 
 
-import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.model.User;
 import com.jevin.jmartapi.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class UserController {
     UserRepo repo;
 
     @GetMapping("/{id}")
-    public Optional<User> get(@PathVariable int id) {
+    public Optional<User> get(@PathVariable Long id) {
         return repo.findById(id);
     }
 
@@ -38,7 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable int id) {
+    public boolean delete(@PathVariable Long id) {
 
         if (repo.existsById(id)) {
             repo.deleteById(id);
