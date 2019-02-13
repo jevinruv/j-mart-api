@@ -17,7 +17,7 @@ public class UserController {
     UserRepo repo;
 
     @GetMapping("/{id}")
-    public Optional<User> get(@PathVariable Long id) {
+    public Optional<User> get(@PathVariable int id) {
         return repo.findById(id);
     }
 
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Long id) {
+    public boolean delete(@PathVariable int id) {
 
         if (repo.existsById(id)) {
             repo.deleteById(id);

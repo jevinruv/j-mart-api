@@ -1,9 +1,8 @@
 package com.jevin.jmartapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -13,8 +12,18 @@ public class Product {
     private int id;
     private String name;
     private double price;
-    private String category;
     private String imageUrl;
+    private String category;
+    @Column(columnDefinition = "Text")
+    private String description;
+
+/*    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn
+    private Category category;
+
+    @OneToOne(mappedBy = "product")
+    private Discount discount;*/
 
 
     public int getId() {
@@ -41,6 +50,14 @@ public class Product {
         this.price = price;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -49,11 +66,27 @@ public class Product {
         this.category = category;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getDescription() {
+        return description;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+    /*    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }*/
 }

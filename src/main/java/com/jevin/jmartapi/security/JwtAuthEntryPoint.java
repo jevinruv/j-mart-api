@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//handle Error exception when having unauthorized requests
+/***
+ * handle Error exception when having unauthorized requests
+ */
 @Component
 public class JwtAuthEntryPoint  implements AuthenticationEntryPoint {
 
@@ -20,6 +22,6 @@ public class JwtAuthEntryPoint  implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         logger.error("Unauthorized error, Message - {}", e.getMessage());
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }

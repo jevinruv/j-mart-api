@@ -26,6 +26,17 @@ public class UserSignUp {
     @Size(min = 6, max = 40)
     private String password;
 
+    public UserSignUp() {
+    }
+
+    public UserSignUp(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username, @NotBlank @Size(max = 60) @Email String email, Set<String> role, @NotBlank @Size(min = 6, max = 40) String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
