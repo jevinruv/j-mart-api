@@ -1,6 +1,7 @@
 package com.jevin.jmartapi.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -13,15 +14,19 @@ public class Product {
     private String name;
     private double price;
     private String imageUrl;
-    private String category;
+
     @Column(columnDefinition = "Text")
     private String description;
 
-/*    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    //@JsonIdentityReference(alwaysAsId = true)
+    //@JsonProperty("category_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
+    /*
     @OneToOne(mappedBy = "product")
     private Discount discount;*/
 
@@ -58,14 +63,6 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -74,14 +71,14 @@ public class Product {
         this.description = description;
     }
 
-    /*    public Category getCategory() {
+    public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
     }
-
+ /*
     public Discount getDiscount() {
         return discount;
     }

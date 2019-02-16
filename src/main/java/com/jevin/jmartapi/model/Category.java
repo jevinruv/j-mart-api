@@ -1,9 +1,9 @@
 package com.jevin.jmartapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Category {
@@ -13,10 +13,6 @@ public class Category {
     private int id;
     private String code;
     private String name;
-
-/*    @JsonBackReference
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Product> productList;*/
 
     public int getId() {
         return id;
@@ -41,14 +37,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
-
-    /*    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }*/
 
 }

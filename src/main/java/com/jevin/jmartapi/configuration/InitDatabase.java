@@ -3,6 +3,7 @@ package com.jevin.jmartapi.configuration;
 import com.jevin.jmartapi.model.UserSignUp;
 import com.jevin.jmartapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,9 @@ public class InitDatabase implements CommandLineRunner {
 
     @Autowired
     UserService userService;
+
+/*    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String isInit;*/
 
     public void init() {
 
@@ -36,6 +40,9 @@ public class InitDatabase implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
+        // if(!isInit.isEmpty()){
         init();
+        // }
     }
 }

@@ -2,7 +2,9 @@ package com.jevin.jmartapi.controller;
 
 import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.repository.ProductRepo;
+import com.jevin.jmartapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,23 +19,25 @@ public class ProductController {
     @Autowired
     ProductRepo repo;
 
+    @Autowired
+    ProductService productService;
+
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Optional<Product> get(@PathVariable int id) {
         return repo.findById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<Product> getAll() {
         return repo.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/new/{categoryId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Product add(@RequestBody Product product) {
-        return repo.save(product);
+    public Product add(@PathVariable int categoryId, @RequestBody Product product) {
+        return productService.create(categoryId, product);
     }
+
 
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")

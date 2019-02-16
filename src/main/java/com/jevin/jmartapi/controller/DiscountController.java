@@ -18,13 +18,13 @@ public class DiscountController {
     DiscountRepo repo;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<Discount> getAll(){
         return repo.findAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Optional<Discount> get(@PathVariable int id){
         return repo.findById(id);
     }

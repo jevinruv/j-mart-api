@@ -23,16 +23,17 @@ VALUES
   ('electronics', 'Electronics');
 
 
-INSERT INTO product (name, price, description, image_url, category)
+INSERT INTO product (name, price, description, image_url, category_id)
 VALUES
 ('Dell Inspiron 15 5000',
  80000,
- '5.6" Touchscreen Truelife LED-Backlit Full HD (1920 x 1080) Display; Intel Integrated 620 Graphics
+ '15.6" Touchscreen Truelife LED-Backlit Full HD (1920 x 1080) Display; Intel Integrated 620 Graphics
 8th Gen Intel Quad Core i5-8250U Processor (1.6GHz, up to 3.4GHz, 6MB Cache), beating i7-7500U in performance by an average of 26% according to tests from external websites
 8 GB DDR4 SDRAM, 1TB SATA hard drive
 Backlit Keyboard; 802.11 Dual Band Wireless-AC + Bluetooth 4.2, Integrated Widescreen HD Webcam',
  'https://images-na.ssl-images-amazon.com/images/I/51jaRdqhXrL._SX679_.jpg',
- 'computers'),
+ 1),
+/*  'computers'),*/
 
 ('Xiaomi Redmi Note 5',
  30000,
@@ -41,7 +42,8 @@ Backlit Keyboard; 802.11 Dual Band Wireless-AC + Bluetooth 4.2, Integrated Wides
 64GB + 4GB RAM - microSD, up to 256 GB (uses SIM 2 slot) - Snapdragon 636, octa-core - Fingerprint (rear-mounted) - Non-removable Li-Po 4000 mAh battery
 Dual Rear Camera: 12 MP (f/2.2, 1.25µm) + 5 MP (f/2.0, 1.12µm) - 13 MP Front Camera, Selfie-Light',
  'https://images-na.ssl-images-amazon.com/images/I/51NmkGKj3TL._SX679_.jpg',
- 'phones'),
+ 1),
+/* 'phones'),*/
 
 ('JBL Speaker',
  3000,
@@ -49,7 +51,8 @@ Dual Rear Camera: 12 MP (f/2.2, 1.25µm) + 5 MP (f/2.0, 1.12µm) - 13 MP Front C
 Battery type : Lithium-ion Polymer (22.2Wh)2) 20 hours of playtime(varies by volume level and content)
 IPX7 Waterproof',
  'https://images-na.ssl-images-amazon.com/images/I/61TSAn9KKxL._SX679_.jpg',
- 'electronics');
+ 2);
+/* 'electronics');*/
 
 
 INSERT INTO discount (percentage, product_id)
