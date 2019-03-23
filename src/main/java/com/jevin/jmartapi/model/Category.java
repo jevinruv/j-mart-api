@@ -13,6 +13,8 @@ public class Category {
     private int id;
     private String code;
     private String name;
+    private String imageUrl;
+
 
     public int getId() {
         return id;
@@ -38,4 +40,11 @@ public class Category {
         this.name = name;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

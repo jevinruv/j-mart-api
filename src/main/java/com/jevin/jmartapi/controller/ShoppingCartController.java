@@ -38,20 +38,10 @@ public class ShoppingCartController {
     }
 
     @PostMapping
-    public ShoppingCartProduct add(@RequestBody ShoppingCartForm shoppingCartForm) {
-        return shoppingCartService.addProduct(shoppingCartForm);
+    public ShoppingCartProduct addOrUpdate(@RequestBody ShoppingCartForm shoppingCartForm) {
+        return shoppingCartService.addOrUpdate(shoppingCartForm);
     }
 
-
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable int id) {
-
-        if (repo.existsById(id)) {
-            repo.deleteById(id);
-            return true;
-        }
-        return false;
-    }
 
 
 }

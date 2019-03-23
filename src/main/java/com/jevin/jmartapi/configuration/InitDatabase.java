@@ -3,7 +3,6 @@ package com.jevin.jmartapi.configuration;
 import com.jevin.jmartapi.model.UserSignUp;
 import com.jevin.jmartapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

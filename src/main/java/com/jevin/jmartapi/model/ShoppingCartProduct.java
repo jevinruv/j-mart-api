@@ -1,6 +1,6 @@
 package com.jevin.jmartapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -13,12 +13,14 @@ public class ShoppingCartProduct {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "shopping_cart_id")
-    @JsonBackReference
+    @JoinColumn
+    @JsonIgnoreProperties("shoppingCartProducts")
     private ShoppingCart shoppingCart;
 
     @ManyToOne
+    @JoinColumn
     private Product product;
+
 
     public int getId() {
         return id;
@@ -51,4 +53,5 @@ public class ShoppingCartProduct {
     public void setProduct(Product product) {
         this.product = product;
     }
+
 }

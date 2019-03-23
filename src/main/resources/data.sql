@@ -15,47 +15,100 @@ VALUES
   (2, 2);
   */
 
-
-INSERT INTO category (code, name)
+INSERT INTO shopping_cart (user_id, created_date)
 VALUES
-  ('computers', 'Computers'),
-  ('phones', 'Phones'),
-  ('electronics', 'Electronics');
+(1, 1122),
+(2, 23333);
+
+
+INSERT INTO category (code, name, image_url)
+VALUES
+('salads', 'Salads & Crispy Greens',
+ 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?cs=srgb&dl=appetizer-cucumber-cuisine-1059905.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=360'),
+
+('soup', 'Soup',
+ 'https://images.pexels.com/photos/1703272/pexels-photo-1703272.jpeg?cs=srgb&dl=bowl-cuisine-delicious-1703272.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426'),
+
+('sandwiches', 'Sandwiches',
+ 'https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?cs=srgb&dl=blur-bread-breakfast-1647163.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426'),
+
+('drinks', 'Drinks',
+ 'https://images.pexels.com/photos/1232152/pexels-photo-1232152.jpeg?cs=srgb&dl=alcoholic-beverage-beverage-citrus-1232152.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=447'),
+
+('pasta', 'Pasta',
+ 'https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?cs=srgb&dl=basil-cheese-close-up-1438672.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426');
 
 
 INSERT INTO product (name, price, description, image_url, category_id)
 VALUES
-('Dell Inspiron 15 5000',
- 80000,
- '15.6" Touchscreen Truelife LED-Backlit Full HD (1920 x 1080) Display; Intel Integrated 620 Graphics
-8th Gen Intel Quad Core i5-8250U Processor (1.6GHz, up to 3.4GHz, 6MB Cache), beating i7-7500U in performance by an average of 26% according to tests from external websites
-8 GB DDR4 SDRAM, 1TB SATA hard drive
-Backlit Keyboard; 802.11 Dual Band Wireless-AC + Bluetooth 4.2, Integrated Widescreen HD Webcam',
- 'https://images-na.ssl-images-amazon.com/images/I/51jaRdqhXrL._SX679_.jpg',
+('Green Salad',
+ 500,
+ 'Full-flavored tuna salad, with iceberg lettuce and tomato slices, served on whole wheat bread. Complemented by chicken noodle soup',
+ 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?cs=srgb&dl=appetizer-cucumber-cuisine-1059905.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=360',
  1),
-/*  'computers'),*/
 
-('Xiaomi Redmi Note 5',
- 30000,
- '3G HSDPA: 850 / 900 / 1900 / 2100 - 4G LTE: B1/2/3/4/5/7/8/20/28/38/40 - Hybrid Dual SIM (Nano-SIM, dual stand-by)
-5.99 inches, 2160 x 1080 FHD+, 403 PPI - Corning Gorilla Glass
-64GB + 4GB RAM - microSD, up to 256 GB (uses SIM 2 slot) - Snapdragon 636, octa-core - Fingerprint (rear-mounted) - Non-removable Li-Po 4000 mAh battery
-Dual Rear Camera: 12 MP (f/2.2, 1.25µm) + 5 MP (f/2.0, 1.12µm) - 13 MP Front Camera, Selfie-Light',
- 'https://images-na.ssl-images-amazon.com/images/I/51NmkGKj3TL._SX679_.jpg',
+('Mushroom Salad',
+ 500,
+ 'Full-flavored tuna salad, with iceberg lettuce and tomato slices, served on whole wheat bread. Complemented by chicken noodle soup',
+ 'https://images.pexels.com/photos/806361/pexels-photo-806361.jpeg?cs=srgb&dl=appetizer-blur-close-up-806361.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=423',
  1),
-/* 'phones'),*/
 
-('JBL Speaker',
- 3000,
- 'Bluetooth - Wirelessly connect up to 3 smartphones or tablets to the speaker and take turns playing powerful stereo sound.
-Battery type : Lithium-ion Polymer (22.2Wh)2) 20 hours of playtime(varies by volume level and content)
-IPX7 Waterproof',
- 'https://images-na.ssl-images-amazon.com/images/I/61TSAn9KKxL._SX679_.jpg',
- 2);
-/* 'electronics');*/
+
+('Mustard Soup',
+ 520,
+ 'Chunks of seasoned beef, browned, and then cooked with potatoes, carrots, corn, onion, and peas in a full-flavored brown sauce',
+ 'https://images.pexels.com/photos/209540/pexels-photo-209540.jpeg?cs=srgb&dl=bowl-broth-cooking-209540.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426',
+ 2),
+
+('Chicken Soup',
+ 520,
+ 'Chunks of seasoned beef, browned, and then cooked with potatoes, carrots, corn, onion, and peas in a full-flavored brown sauce',
+ 'https://images.pexels.com/photos/1275894/pexels-photo-1275894.jpeg?cs=srgb&dl=bowl-chopsticks-close-up-1275894.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=431',
+ 2),
+
+
+('Ham Sandwich',
+ 540,
+ 'Chunks of seasoned beef, browned, and then cooked with potatoes, carrots, corn, onion, and peas in a full-flavored brown sauce',
+ 'https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?cs=srgb&dl=blur-bread-breakfast-1647163.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426',
+ 3),
+
+('Tomato Sandwich',
+ 420,
+ 'Chunks of seasoned beef, browned, and then cooked with potatoes, carrots, corn, onion, and peas in a full-flavored brown sauce',
+ 'https://images.pexels.com/photos/1753052/pexels-photo-1753052.jpeg?cs=srgb&dl=bread-close-up-cuisine-1753052.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426',
+ 3),
+
+
+('Ice Coffee',
+ 250,
+ 'Chunks of seasoned beef, browned, and then cooked with potatoes, carrots, corn, onion, and peas in a full-flavored brown sauce',
+ 'https://images.pexels.com/photos/1162455/pexels-photo-1162455.jpeg?cs=srgb&dl=brown-color-drink-1162455.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=853',
+ 4),
+
+('Lemon Delight',
+ 300,
+ 'Chunks of seasoned beef, browned, and then cooked with potatoes, carrots, corn, onion, and peas in a full-flavored brown sauce',
+ 'https://images.pexels.com/photos/1232152/pexels-photo-1232152.jpeg?cs=srgb&dl=alcoholic-beverage-beverage-citrus-1232152.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=447',
+ 4),
+
+
+('Beef Pasta',
+ 880,
+ 'The ground beef is seasoned "Italian" style, and sautéed with fresh onion and pepper. Served over pasta with red sauce and combined with a side salad',
+ 'https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?cs=srgb&dl=beans-cheese-close-up-1527603.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426',
+ 5),
+
+('Cheese Pasta',
+ 990,
+ 'The ground beef is seasoned "Italian" style, and sautéed with fresh onion and pepper. Served over pasta with red sauce and combined with a side salad',
+ 'https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?cs=srgb&dl=basil-cheese-close-up-1438672.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=640&h=426',
+ 5);
 
 
 INSERT INTO discount (percentage, product_id)
 VALUES
   (25, 1),
-  (35, 2);
+  (25, 3),
+  (25, 4),
+  (35, 7);
