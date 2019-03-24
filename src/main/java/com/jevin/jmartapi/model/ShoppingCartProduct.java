@@ -54,4 +54,8 @@ public class ShoppingCartProduct {
         this.product = product;
     }
 
+    public void makePusherReady(){
+        this.getShoppingCart().getShoppingCartProducts().clear();
+    }
+
 }

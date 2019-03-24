@@ -1,6 +1,7 @@
 package com.jevin.jmartapi.service;
 
 import com.jevin.jmartapi.configuration.PusherConfig;
+import com.jevin.jmartapi.exception.ResourceNotFoundException;
 import com.jevin.jmartapi.form.ShoppingCartForm;
 import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.model.ShoppingCart;
@@ -10,7 +11,10 @@ import com.jevin.jmartapi.repository.ShoppingCartProductRepo;
 import com.jevin.jmartapi.repository.ShoppingCartRepo;
 import com.pusher.rest.Pusher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
@@ -40,46 +44,77 @@ public class ShoppingCartService {
         pusher = PusherConfig.getPusher();
     }
 
-    public ShoppingCartProduct addOrUpdate(ShoppingCartForm shoppingCartForm) {
+    public ResponseEntity<?> addOrUpdate(ShoppingCartForm shoppingCartForm) {
 
-        Optional<Product> productOptional = productRepo.findById(shoppingCartForm.getProductId());
+        Product product = productRepo.findById(shoppingCartForm.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + shoppingCartForm.getProductId()));
 
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
+        ShoppingCart shoppingCart = shoppingCartRepo.findById(shoppingCartForm.getShoppingCartId())
+                .orElseThrow(() -> new ResourceNotFoundException("Shopping Cart not found for this id :: " + shoppingCartForm.getShoppingCartId()));
 
-            Optional<ShoppingCartProduct> shoppingCartProductOptional = shoppingCartProductRepo.findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
 
-            if (shoppingCartProductOptional.isPresent()) {
-                update(shoppingCartProductOptional, shoppingCartForm);
-            } else {
+        Optional<ShoppingCartProduct> shoppingCartProductOptional =
+                shoppingCartProductRepo.findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
 
-                Optional<ShoppingCart> shoppingCart = shoppingCartRepo.findById(shoppingCartForm.getShoppingCartId());
-
-                if (shoppingCart.isPresent()) {
-                    add(product, shoppingCart, shoppingCartForm);
-                }
-            }
-
-            shoppingCartProduct.getShoppingCart().getShoppingCartProducts().clear();
-
-            pusher.trigger(this.CHANNEL_NAME, this.event, this.shoppingCartProduct);
+        if (shoppingCartProductOptional.isPresent()) {
+            update(shoppingCartForm, shoppingCartProductOptional);
+        } else {
+            add(shoppingCartForm, shoppingCart, product);
         }
 
-        return shoppingCartProduct;
+        this.shoppingCartProduct.makePusherReady();
+        pusher.trigger(this.CHANNEL_NAME, this.event, this.shoppingCartProduct);
+
+        return new ResponseEntity<>(this.shoppingCartProduct, HttpStatus.OK);
     }
 
-    private void add(Product product, Optional<ShoppingCart> shoppingCart, ShoppingCartForm shoppingCartForm) {
+    public ResponseEntity<?> deleteCart(int id) {
+
+        Optional<ShoppingCart> shoppingCart = shoppingCartRepo.findById(id);
+
+        if (!shoppingCart.isPresent()) {
+            throw new ResourceNotFoundException("Shopping Cart Id " + id + " not found");
+        }
+
+        shoppingCartRepo.deleteById(id);
+
+        this.event = "cartEmptied";
+        pusher.trigger(this.CHANNEL_NAME, this.event, "");
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> deleteCartItem(ShoppingCartForm shoppingCartForm) {
+
+        Optional<ShoppingCartProduct> productInCart =
+                shoppingCartProductRepo.findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
+
+        if (!productInCart.isPresent()) {
+            throw new ResourceNotFoundException("Shopping Cart Id " + shoppingCartForm.getShoppingCartId() + " not found");
+        }
+
+        this.shoppingCartProduct = productInCart.get();
+        shoppingCartProductRepo.deleteById(this.shoppingCartProduct.getId());
+
+        this.shoppingCartProduct.makePusherReady();
+        this.event = "cartEmptied";
+        pusher.trigger(this.CHANNEL_NAME, this.event, this.shoppingCartProduct);
+
+        return new ResponseEntity<>(this.shoppingCartProduct, HttpStatus.OK);
+    }
+
+    private void add(ShoppingCartForm shoppingCartForm, ShoppingCart shoppingCart, Product product) {
 
         shoppingCartProduct = new ShoppingCartProduct();
         shoppingCartProduct.setQuantity(shoppingCartForm.getQuantity());
-        shoppingCartProduct.setShoppingCart(shoppingCart.get());
+        shoppingCartProduct.setShoppingCart(shoppingCart);
         shoppingCartProduct.setProduct(product);
 
         shoppingCartProductRepo.save(shoppingCartProduct);
         event = "itemAdded";
     }
 
-    private void update(Optional<ShoppingCartProduct> shoppingCartProductOptional, ShoppingCartForm shoppingCartForm) {
+    private void update(ShoppingCartForm shoppingCartForm, Optional<ShoppingCartProduct> shoppingCartProductOptional) {
 
         shoppingCartProduct = shoppingCartProductOptional.get();
         shoppingCartProduct.setQuantity(shoppingCartForm.getQuantity());
@@ -87,6 +122,7 @@ public class ShoppingCartService {
         shoppingCartProductRepo.save(shoppingCartProduct);
         event = "itemUpdated";
     }
+
 
 }
 
