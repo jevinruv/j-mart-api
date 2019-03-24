@@ -46,15 +46,17 @@ public class ShoppingCartService {
 
     public ResponseEntity<?> addOrUpdate(ShoppingCartForm shoppingCartForm) {
 
-        Product product = productRepo.findById(shoppingCartForm.getProductId())
+        Product product = productRepo
+                .findById(shoppingCartForm.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + shoppingCartForm.getProductId()));
 
-        ShoppingCart shoppingCart = shoppingCartRepo.findById(shoppingCartForm.getShoppingCartId())
+        ShoppingCart shoppingCart = shoppingCartRepo
+                .findById(shoppingCartForm.getShoppingCartId())
                 .orElseThrow(() -> new ResourceNotFoundException("Shopping Cart not found for this id :: " + shoppingCartForm.getShoppingCartId()));
 
 
-        Optional<ShoppingCartProduct> shoppingCartProductOptional =
-                shoppingCartProductRepo.findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
+        Optional<ShoppingCartProduct> shoppingCartProductOptional = shoppingCartProductRepo
+                .findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
 
         if (shoppingCartProductOptional.isPresent()) {
             update(shoppingCartForm, shoppingCartProductOptional);
@@ -70,11 +72,9 @@ public class ShoppingCartService {
 
     public ResponseEntity<?> deleteCart(int id) {
 
-        Optional<ShoppingCart> shoppingCart = shoppingCartRepo.findById(id);
-
-        if (!shoppingCart.isPresent()) {
-            throw new ResourceNotFoundException("Shopping Cart Id " + id + " not found");
-        }
+        shoppingCartRepo
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Shopping Cart not found for this id :: " + id));
 
         shoppingCartRepo.deleteById(id);
 
@@ -86,14 +86,10 @@ public class ShoppingCartService {
 
     public ResponseEntity<?> deleteCartItem(ShoppingCartForm shoppingCartForm) {
 
-        Optional<ShoppingCartProduct> productInCart =
-                shoppingCartProductRepo.findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
+        this.shoppingCartProduct = shoppingCartProductRepo
+                .findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId())
+                .orElseThrow(() -> new ResourceNotFoundException("Shopping Cart Product not found for this id :: " + shoppingCartForm.getShoppingCartId()));
 
-        if (!productInCart.isPresent()) {
-            throw new ResourceNotFoundException("Shopping Cart Id " + shoppingCartForm.getShoppingCartId() + " not found");
-        }
-
-        this.shoppingCartProduct = productInCart.get();
         shoppingCartProductRepo.deleteById(this.shoppingCartProduct.getId());
 
         this.shoppingCartProduct.makePusherReady();
