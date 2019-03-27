@@ -1,6 +1,7 @@
 INSERT INTO role (name)
 VALUES
   ('ROLE_USER'),
+  ('ROLE_CUSTOMER'),
   ('ROLE_ADMIN');
 
 /*

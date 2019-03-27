@@ -45,21 +45,23 @@ public class AuthController {
         String jwt = jwtProvider.generateJwtToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        JwtResponse jwtResponse = new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+        jwtResponse.setUserId(userRepo.findByUsername(userDetails.getUsername()).get().getId());
+
+        return ResponseEntity.ok(jwtResponse);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserSignUp userSignUp){
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserSignUp userSignUp) {
 
-        if(userRepo.existsByUsername(userSignUp.getUsername())){
+        if (userRepo.existsByUsername(userSignUp.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Username already exists"), HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepo.existsByEmail(userSignUp.getEmail())){
+        if (userRepo.existsByEmail(userSignUp.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("Email already exists"), HttpStatus.BAD_REQUEST);
         }
 
-        // If user does not exist create account
         userService.createUser(userSignUp);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully"), HttpStatus.OK);

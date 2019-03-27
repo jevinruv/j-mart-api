@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
@@ -65,7 +64,7 @@ public class ShoppingCartService {
         }
 
         this.shoppingCartProduct.makePusherReady();
-        pusher.trigger(this.CHANNEL_NAME, this.event, this.shoppingCartProduct);
+        pusher.trigger(this.CHANNEL_NAME + shoppingCartForm.getShoppingCartId(), this.event, this.shoppingCartProduct);
 
         return new ResponseEntity<>(this.shoppingCartProduct, HttpStatus.OK);
     }
@@ -78,8 +77,8 @@ public class ShoppingCartService {
 
         shoppingCartRepo.deleteById(id);
 
-        this.event = "cartEmptied";
-        pusher.trigger(this.CHANNEL_NAME, this.event, "");
+        this.event = "cartDeleted";
+        pusher.trigger(this.CHANNEL_NAME + id, this.event, "");
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
@@ -93,10 +92,25 @@ public class ShoppingCartService {
         shoppingCartProductRepo.deleteById(this.shoppingCartProduct.getId());
 
         this.shoppingCartProduct.makePusherReady();
-        this.event = "cartEmptied";
-        pusher.trigger(this.CHANNEL_NAME, this.event, this.shoppingCartProduct);
+        this.event = "itemRemoved";
+        pusher.trigger(this.CHANNEL_NAME + shoppingCartForm.getShoppingCartId(), this.event, this.shoppingCartProduct);
 
         return new ResponseEntity<>(this.shoppingCartProduct, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> fetchCart(int userId) {
+
+        Optional<ShoppingCart> shoppingCartOptional = shoppingCartRepo.findByUserId(userId);
+        ShoppingCart shoppingCart = null;
+
+        if (!shoppingCartOptional.isPresent()) {
+            shoppingCart = new ShoppingCart(userId);
+            shoppingCartRepo.save(shoppingCart);
+        } else {
+            shoppingCart = shoppingCartOptional.get();
+        }
+
+        return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
     }
 
     private void add(ShoppingCartForm shoppingCartForm, ShoppingCart shoppingCart, Product product) {

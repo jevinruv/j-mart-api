@@ -13,6 +13,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int userId;
+    private String status;
     private Long createdDate;
 
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
@@ -26,6 +27,14 @@ public class ShoppingCart {
     public ShoppingCart(int userId) {
         this.userId = userId;
         this.createdDate = new Date().getTime();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Long getCreatedDate() {

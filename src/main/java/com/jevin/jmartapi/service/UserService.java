@@ -25,26 +25,30 @@ public class UserService {
     @Autowired
     RoleRepo roleRepo;
 
-    public void createUser(UserSignUp userSignUp){
+    public void createUser(UserSignUp userSignUp) {
 
 
         User user = new User(userSignUp.getName(), userSignUp.getUsername(), userSignUp.getEmail(), encoder.encode(userSignUp.getPassword()));
         Set<String> strRoles = userSignUp.getRole();
         Set<Role> roles = new HashSet<>();
 
-        strRoles.forEach(role -> {
+        if (strRoles != null) {
 
-            switch (role){
-                case "admin":
-                    Role adminRole = roleRepo.findByName(RoleName.ROLE_ADMIN).orElseThrow(()-> new RuntimeException("User role not found"));
-                    roles.add(adminRole);
-                    break;
-                case "user":
-                    Role userRole = roleRepo.findByName(RoleName.ROLE_USER).orElseThrow(()-> new RuntimeException("User role not found"));
-                    roles.add(userRole);
-                    break;
-            }
-        });
+            strRoles.forEach(role -> {
+
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepo.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("User role not found"));
+                        roles.add(adminRole);
+                        break;
+//                case "customer":
+//                    Role userRole = roleRepo.findByName(RoleName.ROLE_CUSTOMER).orElseThrow(() -> new RuntimeException("User role not found"));
+//                    roles.add(userRole);
+//                    break;
+                }
+            });
+
+        }
 
         user.setRoles(roles);
         userRepo.save(user);

@@ -26,9 +26,12 @@ public class InitDatabase implements CommandLineRunner {
         Set<String> userRole = new HashSet<>();
         userRole.add("user");
 
-        UserSignUp admin = new UserSignUp("Jevin", "jevinruv", "jevinruv@gmail.com", adminRole, "qwerty");
+        Set<String> customerRole = new HashSet<>();
+        customerRole.add("customer");
 
+        UserSignUp admin = new UserSignUp("Jevin", "jevinruv", "jevinruv@gmail.com", adminRole, "qwerty");
         UserSignUp user = new UserSignUp("Tom", "tom", "tom@gmail.com", userRole, "qwerty");
+        UserSignUp customer = new UserSignUp("Cus", "cus", "tom@gmail.com", customerRole, "qwerty");
 
         admin.setRole(adminRole);
         user.setRole(userRole);
