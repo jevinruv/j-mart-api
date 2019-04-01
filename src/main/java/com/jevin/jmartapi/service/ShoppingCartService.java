@@ -53,6 +53,9 @@ public class ShoppingCartService {
                 .findById(shoppingCartForm.getShoppingCartId())
                 .orElseThrow(() -> new ResourceNotFoundException("Shopping Cart not found for this id :: " + shoppingCartForm.getShoppingCartId()));
 
+        if (shoppingCartForm.getQuantity() <= 0) {
+            return deleteCartItem(shoppingCartForm);
+        }
 
         Optional<ShoppingCartProduct> shoppingCartProductOptional = shoppingCartProductRepo
                 .findByProductIdAndAndShoppingCartId(shoppingCartForm.getProductId(), shoppingCartForm.getShoppingCartId());
