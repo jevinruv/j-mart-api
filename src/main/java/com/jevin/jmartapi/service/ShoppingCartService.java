@@ -106,11 +106,11 @@ public class ShoppingCartService {
         Optional<ShoppingCart> shoppingCartOptional = shoppingCartRepo.findByUserId(userId);
         ShoppingCart shoppingCart = null;
 
-        if (!shoppingCartOptional.isPresent()) {
+        if (shoppingCartOptional.isPresent()) {
+            shoppingCart = shoppingCartOptional.get();
+        } else {
             shoppingCart = new ShoppingCart(userId);
             shoppingCartRepo.save(shoppingCart);
-        } else {
-            shoppingCart = shoppingCartOptional.get();
         }
 
         return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
