@@ -38,7 +38,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/fetch")
-    public ResponseEntity<?> createCart(@RequestBody int userId) {
+    public ResponseEntity<?> fetchCart(@RequestBody int userId) {
         return shoppingCartService.fetchCart(userId);
     }
 
