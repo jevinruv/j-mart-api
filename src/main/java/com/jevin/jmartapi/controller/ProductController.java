@@ -4,7 +4,6 @@ import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.repository.ProductRepo;
 import com.jevin.jmartapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +36,6 @@ public class ProductController {
     public Product add(@PathVariable int categoryId, @RequestBody Product product) {
         return productService.create(categoryId, product);
     }
-
 
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")

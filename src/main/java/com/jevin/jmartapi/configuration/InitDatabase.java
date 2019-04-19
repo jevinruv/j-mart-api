@@ -15,9 +15,6 @@ public class InitDatabase implements CommandLineRunner {
     @Autowired
     UserService userService;
 
-/*    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String isInit;*/
-
     public void init() {
 
         Set<String> adminRole = new HashSet<>();
@@ -42,9 +39,6 @@ public class InitDatabase implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-
-        // if(!isInit.isEmpty()){
         init();
-        // }
     }
 }
