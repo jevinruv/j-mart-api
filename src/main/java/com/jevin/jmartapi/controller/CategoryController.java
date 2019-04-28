@@ -2,7 +2,6 @@ package com.jevin.jmartapi.controller;
 
 import com.jevin.jmartapi.exception.ResourceNotFoundException;
 import com.jevin.jmartapi.model.Category;
-import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.repository.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
