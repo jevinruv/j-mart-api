@@ -40,10 +40,9 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return repo.findById(id).map(category -> {
-            repo.delete(category);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Category Id " + id + " not found"));
+        repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + id));
+        repo.deleteById(id);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
 }

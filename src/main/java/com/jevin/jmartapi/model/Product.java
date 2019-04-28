@@ -1,7 +1,6 @@
 package com.jevin.jmartapi.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -18,9 +17,9 @@ public class Product {
     @Column(columnDefinition = "Text")
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnoreProperties("products")
     private Category category;
 
     /*
