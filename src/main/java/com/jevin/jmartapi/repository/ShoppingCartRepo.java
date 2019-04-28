@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ShoppingCartRepo extends JpaRepository<ShoppingCart, Integer> {
     Optional<ShoppingCart> findByUserId(int id);
+    Optional<ShoppingCart> findByUserIdAndStatus(int userId, String status);
 }

@@ -4,22 +4,10 @@ VALUES
   ('ROLE_CUSTOMER'),
   ('ROLE_ADMIN');
 
-/*
-INSERT INTO user (email, name, password, username)
-VALUES
-  ('jevinruv@gmail.com', 'Jevin', 'qwerty', 'jevinruv'),
-  ('polo@gmail.com', 'Polo', 'qwerty', 'polo');
 
-INSERT INTO user_roles (user_id, role_id)
+INSERT INTO shopping_cart (user_id, status, created_date)
 VALUES
-  (1, 1),
-  (2, 2);
-  */
-
-INSERT INTO shopping_cart (user_id, created_date)
-VALUES
-(1, 1122),
-(2, 23333);
+(2, 'CURRENT', '2019-04-14 02:12:50');
 
 
 INSERT INTO category (code, name, image_url)

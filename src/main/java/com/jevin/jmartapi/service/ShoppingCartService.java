@@ -6,9 +6,11 @@ import com.jevin.jmartapi.form.ShoppingCartForm;
 import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.model.ShoppingCart;
 import com.jevin.jmartapi.model.ShoppingCartProduct;
+import com.jevin.jmartapi.model.User;
 import com.jevin.jmartapi.repository.ProductRepo;
 import com.jevin.jmartapi.repository.ShoppingCartProductRepo;
 import com.jevin.jmartapi.repository.ShoppingCartRepo;
+import com.jevin.jmartapi.repository.UserRepo;
 import com.pusher.rest.Pusher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +18,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Optional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ShoppingCartService {
+
+    @Autowired
+    UserRepo userRepo;
 
     @Autowired
     ProductRepo productRepo;
@@ -103,13 +111,21 @@ public class ShoppingCartService {
 
     public ResponseEntity<?> fetchCart(int userId) {
 
-        Optional<ShoppingCart> shoppingCartOptional = shoppingCartRepo.findByUserId(userId);
+        Optional<ShoppingCart> shoppingCartOptional = shoppingCartRepo.findByUserIdAndStatus(userId, "CURRENT");
         ShoppingCart shoppingCart = null;
 
         if (shoppingCartOptional.isPresent()) {
             shoppingCart = shoppingCartOptional.get();
         } else {
-            shoppingCart = new ShoppingCart(userId);
+
+            userRepo
+                    .findById(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
+
+            shoppingCart = new ShoppingCart();
+            shoppingCart.setCreatedDate(getDate());
+            shoppingCart.setStatus("CURRENT");
+            shoppingCart.setUserId(userId);
             shoppingCartRepo.save(shoppingCart);
         }
 
@@ -134,6 +150,23 @@ public class ShoppingCartService {
 
         shoppingCartProductRepo.save(shoppingCartProduct);
         event = "itemUpdated";
+    }
+
+    private Date getDate() {
+
+        Date date = new Date();
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        String strDate = df.format(date);
+
+        Date newDate = null;
+        try {
+            newDate = df.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return newDate;
     }
 
 

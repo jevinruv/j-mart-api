@@ -27,18 +27,13 @@ public class ShoppingCartController {
         return repo.findById(id);
     }
 
-    @GetMapping("/user/{id}")
-    public Optional<ShoppingCart> getCartByUserId(@PathVariable int id) {
-        return repo.findByUserId(id);
-    }
-
     @GetMapping
     public List<ShoppingCart> getAll() {
         return repo.findAll();
     }
 
-    @PostMapping("/fetch")
-    public ResponseEntity<?> fetchCart(@RequestBody int userId) {
+    @GetMapping("/fetch/{userId}")
+    public ResponseEntity<?> fetchCart(@PathVariable int userId) {
         return shoppingCartService.fetchCart(userId);
     }
 

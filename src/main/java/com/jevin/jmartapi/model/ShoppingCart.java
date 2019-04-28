@@ -1,5 +1,6 @@
 package com.jevin.jmartapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -14,20 +15,14 @@ public class ShoppingCart {
     private int id;
     private int userId;
     private String status;
-    private Long createdDate;
+
+    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss", timezone = "Asia/Colombo")
+    private Date createdDate;
 
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("shoppingCart")
     private Set<ShoppingCartProduct> shoppingCartProducts;
 
-
-    public ShoppingCart() {
-    }
-
-    public ShoppingCart(int userId) {
-        this.userId = userId;
-        this.createdDate = new Date().getTime();
-    }
 
     public String getStatus() {
         return status;
@@ -37,11 +32,11 @@ public class ShoppingCart {
         this.status = status;
     }
 
-    public Long getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Long createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
