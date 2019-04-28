@@ -56,6 +56,7 @@ public class ShoppingCartProduct {
 
     public void makePusherReady(){
         this.getShoppingCart().getShoppingCartProducts().clear();
+        this.getProduct().getCategory().getProducts().clear();
     }
 
 }
