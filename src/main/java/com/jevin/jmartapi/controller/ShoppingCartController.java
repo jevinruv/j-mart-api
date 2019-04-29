@@ -5,6 +5,7 @@ import com.jevin.jmartapi.model.ShoppingCart;
 import com.jevin.jmartapi.repository.ShoppingCartRepo;
 import com.jevin.jmartapi.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,8 @@ public class ShoppingCartController {
 
     @GetMapping("/fetch/{userId}")
     public ResponseEntity<?> fetchCart(@PathVariable int userId) {
-        return shoppingCartService.fetchCart(userId);
+        ShoppingCart shoppingCart = shoppingCartService.fetchCart(userId);
+        return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
     }
 
     @PostMapping

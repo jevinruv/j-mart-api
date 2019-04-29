@@ -109,7 +109,7 @@ public class ShoppingCartService {
         return new ResponseEntity<>(this.shoppingCartProduct, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> fetchCart(int userId) {
+    public ShoppingCart fetchCart(int userId) {
 
         Optional<ShoppingCart> shoppingCartOptional = shoppingCartRepo.findByUserIdAndStatus(userId, "CURRENT");
         ShoppingCart shoppingCart = null;
@@ -129,7 +129,7 @@ public class ShoppingCartService {
             shoppingCartRepo.save(shoppingCart);
         }
 
-        return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
+        return shoppingCart;
     }
 
     private void add(ShoppingCartForm shoppingCartForm, ShoppingCart shoppingCart, Product product) {
@@ -168,7 +168,6 @@ public class ShoppingCartService {
 
         return newDate;
     }
-
 
 }
 
