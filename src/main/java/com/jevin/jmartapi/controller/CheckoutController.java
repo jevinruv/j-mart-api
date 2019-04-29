@@ -15,7 +15,7 @@ public class CheckoutController {
     CheckoutService checkoutService;
 
 
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> doCheckOut(@PathVariable int id) {
         ShoppingCart shoppingCart = checkoutService.doCheckOut(id);
         return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
