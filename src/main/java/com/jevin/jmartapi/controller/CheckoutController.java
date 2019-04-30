@@ -1,11 +1,14 @@
 package com.jevin.jmartapi.controller;
 
+import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.model.ShoppingCart;
 import com.jevin.jmartapi.service.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/checkout")
@@ -20,4 +23,11 @@ public class CheckoutController {
         ShoppingCart shoppingCart = checkoutService.doCheckOut(id);
         return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
     }
+
+    @GetMapping("/history/{userId}")
+    public ResponseEntity<?> getPurchaseHistory(@PathVariable int userId) {
+        List<Product> productList = checkoutService.getPurchaseHistory(userId);
+        return new ResponseEntity<>(productList, HttpStatus.OK);
+    }
+
 }

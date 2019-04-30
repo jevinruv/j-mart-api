@@ -5,11 +5,6 @@ VALUES
   ('ROLE_ADMIN');
 
 
-INSERT INTO shopping_cart (user_id, status, created_date)
-VALUES
-(2, 'CURRENT', '2019-04-14 02:12:50');
-
-
 INSERT INTO category (code, name, image_url)
 VALUES
 ('salads', 'Salads & Crispy Greens',
@@ -101,3 +96,14 @@ VALUES
   (25, 3),
   (25, 4),
   (35, 7);
+
+
+INSERT INTO shopping_cart (user_id, status, created_date)
+VALUES
+(2, 'PAYED', '2019-03-12 04:12:50'),
+(2, 'CURRENT', '2019-04-14 02:12:50');
+
+INSERT INTO shopping_cart_product (shopping_cart_id, product_id, quantity)
+VALUES
+(1, 1, 2),
+(1, 3, 3);
