@@ -3,7 +3,10 @@ package com.jevin.jmartapi.controller;
 
 import com.jevin.jmartapi.model.User;
 import com.jevin.jmartapi.repository.UserRepo;
+import com.jevin.jmartapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,9 @@ public class UserController {
 
     @Autowired
     UserRepo repo;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/{id}")
     public Optional<User> get(@PathVariable int id) {
@@ -32,8 +38,10 @@ public class UserController {
     }
 
     @PutMapping
-    public User update(@RequestBody User user) {
-        return repo.save(user);
+    public ResponseEntity<?> update(@RequestBody User user) {
+
+        User updatedUser =  userService.updateUser(user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
