@@ -53,4 +53,9 @@ public class UserController {
         }
         return false;
     }
+
+    @PostMapping("/token")
+    public ResponseEntity<?> validateToken() {
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 }
