@@ -3,6 +3,7 @@ package com.jevin.jmartapi.service;
 import com.jevin.jmartapi.exception.ResourceNotFoundException;
 import com.jevin.jmartapi.model.Product;
 import com.jevin.jmartapi.model.ShoppingCart;
+import com.jevin.jmartapi.model.ShoppingCartProduct;
 import com.jevin.jmartapi.repository.ShoppingCartRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,22 @@ public class CheckoutService {
                 ));
 
         return productList;
+    }
+
+    public List<ShoppingCartProduct> getPurchaseHistoryW(int userId) {
+
+        List<ShoppingCart> shoppingCartList = shoppingCartRepo.findAllByUserIdAndStatus(userId, "PAYED")
+                .orElseThrow(() -> new ResourceNotFoundException("No Purchase History for this userId :: " + userId));
+
+        List<ShoppingCartProduct> shoppingCartProductList = new ArrayList<>();
+
+        shoppingCartList.forEach(shoppingCart ->
+                shoppingCart.getShoppingCartProducts().forEach(shoppingCartProduct -> {
+                            shoppingCartProductList.add(shoppingCartProduct);
+                        }
+                ));
+
+        return shoppingCartProductList;
     }
 
 }
